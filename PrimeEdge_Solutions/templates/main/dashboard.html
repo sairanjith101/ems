@@ -1,0 +1,105 @@
+{% extends 'main/base.html' %} {% load static %} {% block title %} Prime Edge
+Solutions | Dashboard {% endblock title %} {% block content %}
+<link
+  rel="stylesheet"
+  href="{% static 'css/dashboard_v6.css' %}"
+  type="text/css"
+/>
+{% include 'main/message.html' %}
+<section style="background: none; background-color: #f7f7f7">
+  <div class="dashboard-container">
+
+    <!-- Team Overview Section -->
+    <div class="dashboard-section team-overview">
+      <h2 class="section-title">Team Overview</h2>
+      <div class="team-list">
+        {% for department in department_data %}
+          <div class="team-item">
+            <img src="{% if department.team_lead_photo %}{{ department.team_lead_photo }}{% else %}{% static 'images/default_profile.png' %}{% endif %}" alt="Team Lead Photo" class="team-photo"/>
+            <div class="team-info">
+              <h3>{{ department.department_name }}</h3>
+              <p>Team Lead: {{ department.team_lead_name }}</p>
+              <p>{{ department.members_count }} Members</p>
+            </div>
+          </div>
+        {% empty %}
+          <p>No departments available.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+
+    <!-- Total Employees -->
+    <div class="dashboard-section total-employees">
+      <h2 class="section-title">Total Employees</h2>
+      <div class="employee-summary">
+        <div class="summary-item">
+          <h3 class="summary-title">Total Count</h3>
+          <p class="summary-value">{{ total_employees }}</p>
+        </div>
+        <div class="summary-item">
+          <h3 class="summary-title">Active Employees</h3>
+          <p class="summary-value">{{ active_count }}</p>
+        </div>
+        <div class="summary-item">
+          <h3 class="summary-title">Inactive Employees</h3>
+          <p class="summary-value">{{ inactive_count }}</p>
+        </div>
+      </div>
+      
+      <!-- Recent Hires Section -->
+    <div class="dashboard-section recent-hires">
+      <h2 class="section-title">Recent Hires</h2>
+      <div class="recent-hires-container">
+        {% for hire in recent_hires %}
+          <div class="hire-item">
+            <div class="hire-photo">
+              {% if hire.profile_picture %}
+                <img src="{{ hire.profile_picture.url }}" alt="{{ hire.first_name }} {{ hire.last_name }}">
+              {% else %}
+                <img src="{% static 'images/default_profile.png' %}" alt="Default Photo">
+              {% endif %}
+            </div>
+            <div class="hire-info">
+              <p class="hire-name">{{ hire.first_name }} {{ hire.last_name }}</p>
+              <p class="hire-date">Joined {{ hire.date_of_joining|date:"F j, Y" }}</p>
+              <p class="hire-duration">Hired {{ hire.days_since_joined }} days ago</p>
+            </div>
+          </div>
+        {% empty %}
+          <p>No recent hires to display.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Upcoming Birthdays Section -->
+<div class="dashboard-section upcoming-birthdays">
+  <h2 class="section-title">Upcoming Birthdays</h2>
+  <div class="birthdays-list">
+    {% if upcoming_birthdays %}
+      {% for employee in upcoming_birthdays %}
+        <div class="list-group-item">
+          <div class="item-photo">
+            {% if employee.profile_picture %}
+              <img src="{{ employee.profile_picture.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">
+            {% else %}
+              <img src="{% static 'images/default_profile.png' %}" alt="Default Photo">
+            {% endif %}
+          </div>
+          <div class="item-info">
+            <p class="item-name">{{ employee.first_name }} {{ employee.last_name }}</p>
+            <p class="item-date">Birthday: {{ employee.date_of_birth|date:"F j" }}</p>
+          </div>
+        </div>
+      {% empty %}
+        <p>No upcoming birthdays in the next 30 days.</p>
+      {% endfor %}
+    {% else %}
+      <p>No upcoming birthdays in the next 30 days.</p>
+    {% endif %}
+  </div>
+</div>
+
+  </div>
+</section>
+{% endblock content %}

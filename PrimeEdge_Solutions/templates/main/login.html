@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Prime Edge Solutions | Login{% endblock title %}
+{% block sidebar %}{% endblock sidebar %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/login_v3.css' %}" type="text/css" />
+{% include 'main/message.html' %}
+<section class="container">
+  <div class="wrapper">
+    <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="input-field">
+        <input type="text" name="username" required value="{{ form.username.value|default_if_none:'' }}">
+        <label>Enter your username</label>
+      </div>
+      <div class="input-field">
+        <input type="password" name="password" required value="{{ form.password.value|default_if_none:'' }}">
+        <label>Enter your password</label>
+      </div>
+      <button type="submit">Log In</button>
+    </form>
+  </div>
+</section>
+{% endblock content %}

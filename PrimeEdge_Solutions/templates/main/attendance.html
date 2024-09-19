@@ -1,0 +1,153 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} Prime Edge Solutions | Attendance {% endblock title %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/attendance_v4.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+
+{% include 'main/message.html' %}
+<section class="attendance-section">
+  <div class="container">
+    <h2 id="att">Attendance</h2>
+
+    <!-- Current Day Attendance -->
+    <h3>Today's Attendance</h3>
+    <table class="attendance-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Check In</th>
+          <th>Check Out</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ attendance.date }}</td>
+          <td>
+            {% if not attendance.check_in_time %}
+            <form method="post" action="{% url 'attendance' %}">
+              {% csrf_token %}
+              <button type="submit" name="check_in" class="btn btn-primary">Check In</button>
+            </form>
+            {% else %}
+            {{ attendance.check_in_time }}
+            {% endif %}
+          </td>
+          <td>
+            {% if attendance.check_in_time and not attendance.check_out_time %}
+            <form method="post" action="{% url 'attendance' %}">
+              {% csrf_token %}
+              <button type="submit" name="check_out" class="btn btn-secondary">Check Out</button>
+            </form>
+            {% elif attendance.check_out_time %}
+            {{ attendance.check_out_time }}
+            {% else %}
+            <em>Not Checked In</em>
+            {% endif %}
+          </td>
+          <td>
+            {% if attendance.status == 'On Leave' %}
+            <span class="status-onleave">On Leave</span>
+            {% elif not attendance.check_in_time %}
+            <span class="status-absent">Absent</span>
+            {% elif attendance.status == 'Present' %}
+            <span class="status-present">Present</span>
+            {% elif attendance.status == 'Half Day' %}
+            <span class="status-halfday">Half Day</span>
+            {% endif %}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- View Toggle -->
+    <div class="view-toggle">
+      <a href="{% url 'attendance' %}?view=table" class="btn btn-toggle {% if view_type == 'table' %}active{% endif %}">Table View</a>
+      <a href="{% url 'attendance' %}?view=calendar" class="btn btn-toggle {% if view_type == 'calendar' %}active{% endif %}">Calendar View</a>
+    </div>
+
+    <!-- Previous Attendance Records -->
+    {% if view_type == 'table' %}
+    <h3>Previous Attendance Records (Table View)</h3>
+    <table class="attendance-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Check In</th>
+          <th>Check Out</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in attendance_records %}
+        <tr>
+          <td>{{ record.date }}</td>
+          <td>{{ record.check_in_time|default:"Not Checked In" }}</td>
+          <td>{{ record.check_out_time|default:"Not Checked Out" }}</td>
+          <td>
+            {% if record.status == 'On Leave' %}
+            <span class="status-onleave">On Leave</span>
+            {% elif record.status == 'Present' %}
+            <span class="status-present">Present</span>
+            {% elif record.status == 'Absent' %}
+            <span class="status-absent">Absent</span>
+            {% elif record.status == 'Half Day' %}
+            <span class="status-halfday">Half Day</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">No previous attendance records found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% elif view_type == 'calendar' %}
+    <h3>Previous Attendance Records (Calendar View)</h3>
+    <div id="calendar" class="calendar"></div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      events: [
+        {% for record in attendance_records %}
+        {
+          title: '{{ record.status|escapejs }}',
+          start: '{{ record.date|date:"Y-m-d" }}',
+          end: '{{ record.date|date:"Y-m-d" }}',
+          backgroundColor: getStatusColor('{{ record.status|escapejs }}'),
+          borderColor: getStatusColor('{{ record.status|escapejs }}'),
+          textColor: '#ffffff'
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ],
+      height: 'auto'
+    });
+
+    calendar.render();
+
+    function getStatusColor(status) {
+      switch (status) {
+        case 'Present':
+          return '#28a745'; // Green
+        case 'Absent':
+          return '#dc3545'; // Red
+        case 'Half Day':
+          return '#ffc107'; // Yellow
+        case 'On Leave':
+          return '#17a2b8'; // Blue
+        default:
+          return '#6c757d'; // Grey
+      }
+    }
+  });
+</script>
+{% endblock %}

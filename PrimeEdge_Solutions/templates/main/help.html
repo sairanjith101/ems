@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %} {% load static %} {% block title %} Prime Edge
+Solutions | Dashboard {% endblock title %} {% block content %}
+
+<link rel="stylesheet" href="{% static 'css/help_v4.css' %}" type="text/css" />
+
+<section>
+  <div class="help-container">
+    <h1>Help Page</h1>
+    <p>If you need assistance, please contact our support team:</p>
+
+    <div class="contact-info">
+      <p>
+        Email:
+        <a href="mailto:support@primeedgesolutions.com"
+          >support@primeedgesolutions.com</a
+        >
+      </p>
+    </div>
+
+    <div class="back-link">
+      <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Home</a>
+    </div>
+  </div>
+</section>
+{% endblock content %}

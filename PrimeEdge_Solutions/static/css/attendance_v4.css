@@ -1,0 +1,228 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+body{
+    font-family: "Poppins", sans-serif;
+}
+
+section {
+  height: auto;
+}
+
+/* Basic Styles for Attendance Section */
+.attendance-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.attendance-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h2#att {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+h3 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+/* Table Styles */
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.attendance-table th,
+.attendance-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.attendance-table th {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.attendance-table td {
+  background-color: #fff;
+}
+
+.status-present {
+  color: #28a745;
+}
+
+.status-absent {
+  color: #dc3545;
+}
+
+.status-halfday {
+  color: #ffc107;
+}
+
+.status-onleave {
+  color: #17a2b8;
+}
+
+.status-present::before {
+  content: "✔";
+  margin-right: 5px;
+}
+
+.status-absent::before {
+  content: "✘";
+  margin-right: 5px;
+}
+
+.status-halfday::before {
+  content: "⏳";
+  margin-right: 5px;
+}
+
+.status-onleave::before {
+  content: "🛌";
+  margin-right: 5px;
+}
+
+/* Button Styles */
+.btn {
+  padding: 10px 15px;
+  border: none;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: #007bff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-toggle {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.btn-toggle.active {
+  background-color: #006838;
+  color: #fff;
+  border-color: #006838;
+}
+
+/* Calendar Styles */
+.calendar {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .attendance-section .container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  h2#att {
+    font-size: 1.8em;
+  }
+
+  h3 {
+    font-size: 1.4em;
+  }
+
+  .attendance-table th,
+  .attendance-table td {
+    padding: 8px;
+  }
+
+  .btn {
+    padding: 8px 12px;
+  }
+
+  .btn-toggle {
+    padding: 8px 15px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 768px) {
+  .attendance-table {
+    font-size: 0.9em;
+  }
+
+  .attendance-table th,
+  .attendance-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    text-align: right;
+    border: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .attendance-table th {
+    text-align: left;
+    background-color: #343a40;
+  }
+
+  .attendance-table td {
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .status-present::before,
+  .status-absent::before,
+  .status-halfday::before,
+  .status-onleave::before {
+    display: inline-block;
+    margin-right: 0;
+  }
+
+  .calendar {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  h2#att {
+    font-size: 1.6em;
+  }
+
+  h3 {
+    font-size: 1.2em;
+  }
+
+  .btn {
+    padding: 7px 10px;
+    font-size: 0.9em;
+  }
+
+  .btn-toggle {
+    padding: 7px 12px;
+    font-size: 0.8em;
+  }
+}

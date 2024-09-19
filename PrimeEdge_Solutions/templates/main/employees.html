@@ -1,0 +1,118 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} Prime Edge Solutions | Employees {% endblock title %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/employees_v2.css' %}" type="text/css"/>
+
+{% include 'main/message.html' %}
+<section>
+    <div class="employee-content">
+        <h2>Employee List</h2>
+
+        <div class="search-table">
+            <form method="get" action="{% url 'employees' %}">
+                <table>
+                    <!-- <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Position</th>
+                        </tr>
+                    </thead> -->
+                    <tbody>
+                        <tr style="background-color: #343a40;">
+                            <td>
+                                <label for="id-search">
+                                    <i class="fas fa-id-badge"></i> ID
+                                </label>
+                                <input type="text" id="id-search" name="id" placeholder="Search by ID" value="{{ request.GET.id }}" />
+                            </td>
+                            <td>
+                                <label for="name-search">
+                                    <i class="fas fa-user"></i> Full Name
+                                </label>
+                                <input type="text" id="name-search" name="name" placeholder="Search by Name" value="{{ request.GET.name }}" />
+                            </td>
+                            <td>
+                                <label for="email-search">
+                                    <i class="fas fa-envelope"></i> Email
+                                </label>
+                                <input type="text" id="email-search" name="email" placeholder="Search by Email" value="{{ request.GET.email }}" />
+                            </td>
+                            <td>
+                                <label for="phone-search">
+                                    <i class="fas fa-phone"></i> Phone Number
+                                </label>
+                                <input type="text" id="phone-search" name="phone" placeholder="Search by Phone" value="{{ request.GET.phone }}" />
+                            </td>
+                            <td>
+                                <label for="position-search">
+                                    <i class="fas fa-briefcase"></i> Position
+                                </label>
+                                <input type="text" id="position-search" name="position" placeholder="Search by Position" value="{{ request.GET.position }}" />
+                            </td>
+                            <td>
+                                <label for="department-search">
+                                    <i class="fas fa-building"></i> Department
+                                </label>
+                                <input type="text" id="department-search" name="department" placeholder="Search by Department" value="{{ request.GET.department }}" />
+                            </td>
+                        </tr>
+                        <tr style="background-color: #f7f7f7;">
+                            <td colspan="5">
+                                <button type="submit">Search</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+
+        {% if employees %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Profile Picture</th>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Position</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                        <tr>
+                            <td>
+                                {% if employee.profile_picture %}
+                                    <img src="{{ employee.profile_picture.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}" class="profile-pic" />
+                                {% else %}
+                                    <img src="{% static 'images/default-profile.png' %}" alt="Default Profile Picture" class="profile-pic" />
+                                {% endif %}
+                            </td>
+                            <td>{{ employee.employee_id }}</td>
+                            <td>{{ employee.first_name }} {{ employee.last_name }}</td>
+                            <td>{{ employee.email }}</td>
+                            <td>{{ employee.phone_number }}</td>
+                            <td>{{ employee.position }}</td>
+                            <td>{{ employee.department.name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            {% if request.GET.id or request.GET.name or request.GET.email or request.GET.phone or request.GET.position or request.GET.department %}
+                <p>No employees found with the given search criteria.</p>
+            {% else %}
+                <p>Use the search form to find employees.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}

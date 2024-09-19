@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %} {% load static %} {% block title %} Prime Edge
+Solutions | Dashboard {% endblock title %} {% block content %}
+<h1>Company Information</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Company Name</th>
+      <th>Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for company in companies %}
+    <tr>
+      <td>{{ company.name }}</td>
+      <td>{{ company.address }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="2">No company information available</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{% url 'home' %}">Back to Home</a>
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %} {% load static %} {% block title %} Prime Edge
+Solutions | Dashboard {% endblock title %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/profile_v4.css' %}" type="text/css" />
+
+<section>
+  <div class="profile-container">
+    <h2>Employee Profile</h2>
+
+    {% if employee %}
+    <div class="profile-card">
+      {% if employee.profile_picture %}
+      <div class="profile-picture">
+        <img src="{{ employee.profile_picture.url }}" alt="Profile Picture" />
+      </div>
+      {% endif %}
+      <div class="profile-details">
+        <p>
+          <strong>Full Name:</strong> {{ employee.first_name }} {{ employee.last_name }}
+        </p>
+        <p><strong>Email:</strong> {{ employee.email }}</p>
+        <p><strong>Phone Number:</strong> {{ employee.phone_number }}</p>
+        <p><strong>Position:</strong> {{ employee.position }}</p>
+        <p><strong>Department:</strong> {{ employee.department.name }}</p>
+        <p><strong>Date of Birth:</strong> {{ employee.date_of_birth }}</p>
+        <p><strong>Date of Joining:</strong> {{ employee.date_of_joining }}</p>
+        <p><strong>Address:</strong> {{ employee.address }}</p>
+        <p><strong>Salary:</strong> ₹{{ employee.salary }}</p>
+        <p><strong>Employee ID:</strong> {{ employee.employee_id }}</p>
+        <p>
+          <strong>Status:</strong> 
+          <span class="{% if status == 'Active' %}status-active{% elif status == 'On Leave' %}status-on-leave{% else %}status-inactive{% endif %}">
+            {{ status }}
+          </span>
+        </p>
+      </div>
+    </div>
+    {% else %}
+    <p>No profile information available.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock content %}

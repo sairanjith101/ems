@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Side Menu Bar</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'css/sidebar_v2.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <input type="checkbox" id="check" />
+    <label for="check">
+      <i class="fa fa-bars" id="btn"></i>
+      <i class="fa fa-times" id="cancel"></i>
+    </label>
+    <div class="sidebar">
+      <header><a class="header-link" href="{% url 'dashboard' %}"><i class="fas fa-laptop-code"></i>Prime</a></header>
+      <ul>
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'dashboard' %}"><i class="fas fa-qrcode"></i>Dashboard</a></li>
+        <li><a href="{% url 'profile_info' %}"><i class="fas fa-user"></i>Profile</a></li>
+        <li><a href="{% url 'employees' %}"><i class="fa fa-search"></i>Employees</a></li>
+         {% if request.user.employee.position.name == 'Manager' or request.user.employee.position.name == 'Team Lead' %}
+        <li><a href="{% url 'head_officers' %}"><i class="fa fa-users"></i>Head Officers</a></li>
+        {% endif %}
+        <li><a href="{% url 'attendance' %}"><i class="fas fa-clock"></i>Attendance</a></li>
+        {% if request.user.employee.position.name != 'Manager' %}
+        <li><a href="{% url 'leave_page' %}"><i class="fas fa-calendar-alt"></i>Leave</a></li>
+        {% endif %}
+        <li><a href="{% url 'help' %}"><i class="fa fa-question-circle"></i>Help</a></li>
+        <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out-alt"></i>Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i>Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    <section></section>
+  </body>
+</html>

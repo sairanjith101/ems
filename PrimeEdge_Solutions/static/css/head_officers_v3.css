@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+body{
+    font-family: "Poppins", sans-serif;
+}
+
+/* Basic Styles for Head Officers Page */
+section {
+  height: auto;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+thead {
+  background-color: #343a40;
+  color: #fff;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Button Styles */
+.btn {
+  padding: 8px 12px;
+  border: none;
+  color: #fff;
+  font-size: 0.9em;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-success {
+  background-color: #28a745;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  section {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  table th, table td {
+    padding: 8px;
+  }
+
+  .btn {
+    padding: 7px 10px;
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 768px) {
+  table {
+    font-size: 0.9em;
+  }
+
+  table th, table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  table th {
+    text-align: center;
+    background-color: #343a40;
+  }
+
+  table td {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+@media (max-width: 576px) {
+  h2 {
+    font-size: 1.6em;
+  }
+
+  .btn {
+    padding: 7px 10px;
+    font-size: 0.8em;
+  }
+}

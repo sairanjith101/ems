@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} Prime Edge Solutions | Dashboard {% endblock title %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/head_officers_v3.css' %}" type="text/css" />
+{% include 'main/message.html' %}
+<section>
+<h2>Head Officers Page</h2>
+
+<!-- <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form> -->
+
+<table>
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Leave Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for leave_request in leave_requests %}
+        <tr>
+            <td>{{ leave_request.employee }}</td>
+            <td>{{ leave_request.leave_type }}</td>
+            <td>{{ leave_request.start_date }}</td>
+            <td>{{ leave_request.end_date }}</td>
+            <td>{{ leave_request.status }}</td>
+            <td>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="leave_request_id" value="{{ leave_request.id }}">
+                    <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
+                    <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</section>
+{% endblock content %}
